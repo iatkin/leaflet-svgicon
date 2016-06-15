@@ -27,7 +27,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 ## Properties
 ### L.DivIcon.SVGIcon
 
-*All colors must be specified as either a hex triplet or as "rgb(...)". If "rgba(...)" is used, the alpha value is ignored,  and the value is converted to "rgb(...)" format.*
+**All colors must be specified as "rgb(...)".**
 
 *Unspecified Icon options are ignored*
 
@@ -64,7 +64,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 
 ## Methods
 ### L.DivIcon.SVGIcon
-*This class does not include any methods that are intended to be user accessible as part of normal use. However, the following methods may be replaced to change the icon's visual appearance.*
+*This class does not include any methods that are intended to be user accessible as part of normal use. The following are the internal methods use to generate the icon. They may be modified in a subclass, but all methods with the exception of* _createPathDescription *may be modified using icon options only. Due to the computations inherent in creating the path description,* _createPathDescription *must be modified in order to change the overall icon shape.*
 
 #### _createCircle()
 Creates the icon's inner circle. This method is 100% customizable using icon options exclusively, and should not need to be modified in most cases.
@@ -76,16 +76,16 @@ Creates the main body of the icon. All aspects of the icon body with the excepti
 Creates the drawing instructions for the icon's shape. This method must be modified in order to change the icon's shape. See the **Advanced Customization** section for more information.
 
 #### _createSVG()
-Creates the final SVG element. This method should not need to be modified unless a heavily modified subclass is being created.
+Creates the final SVG element. This method should not need to be modified unless a subclass requires additional elements. Note that HTML elements need to be placed outside the main <svg> element.
 
 #### _createText()
-
+Creates the SVG text element. More text can be fit without modifying this method by increasing the size of the icon, circle and specifying a font size.
 
 ### L.Marker.SVGMarker
 
 #### setStyle(style)
 This method supports three style values:
-- opacity: Equivalent to using *setOpacity*
+- opacity: Equivalent to using *setOpacity* i.e. the opacity of the entire marker icon changes. 
 - color: Monochromatically sets the icon border color, interior color and inner circle border color
 - iconOptions: A dictionary of specific icon options to change. These may be any SVGIcon option.
 
@@ -94,4 +94,4 @@ If "color" and "iconOptions" are specified, "iconOptions.color" is set to "color
 ## Advanced Customization
 The body of the icon is drawn using an SVG path. The shape may be changed by replacing the *_createPathDescription* method of L.DivIcon.SVGIcon to return a different path description i.e. the path drawing instructions. Please see the Mozilla Developer Network's [SVG Path Tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) for more information on SVG paths.
 
-This repository includes an example L.DivIcon.SVGIcon.RhombusIcon subclass and accompanying convenience L.Marker.SVGMarker subclass.
+This repository includes an example L.DivIcon.SVGIcon.RhombusIcon subclass and accompanying convenience L.Marker.SVGMarker.RhombusMarker subclass.
