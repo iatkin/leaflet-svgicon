@@ -1,54 +1,8 @@
-L.Marker.SVGMarker = L.Marker.extend({
-    options: {
-        "iconOptions": {}
-    },
-    initialize: function(latlng, options) {
-        options = L.Util.setOptions(this, options)
-        options.icon = L.divIcon.svgIcon(options.iconOptions)
-        this._latlng = latlng
-
-        return options
-    },
-    onAdd: function(map) {
-        L.Marker.prototype.onAdd.call(this, map)
-    },
-    setStyle: function(style) {
-        if (this._icon) {
-            var svg = this._icon.children[0]
-            var iconBody = this._icon.children[0].children[0]
-            var iconCircle = this._icon.children[0].children[1]
-
-            if (style.color && !style.iconOptions) {
-                var stroke = style.color.replace("rgb","rgba").replace(")", ","+this.options.icon.options.opacity+")")
-                var fill = style.color.replace("rgb","rgba").replace(")", ","+this.options.icon.options.fillOpacity+")")
-                iconBody.setAttribute("stroke", stroke)
-                iconBody.setAttribute("fill", fill)
-                iconCircle.setAttribute("stroke", stroke)
-
-                this.options.icon.fillColor = fill
-                this.options.icon.color = stroke
-                this.options.icon.circleColor = stroke
-            }
-            if (style.opacity) {
-                this.setOpacity(style.opacity)
-            }
-            if (style.iconOptions) {
-                if (style.color) { style.iconOptions.color = style.color }
-                iconOptions = L.Util.setOptions(this.options.icon, style.iconOptions)
-                this.setIcon(L.divIcon.svgIcon(iconOptions))
-            }
-        }
-    }
-})
-
-L.marker.svgMarker = function(latlng, options) {
-    return new L.Marker.SVGMarker(latlng, options)
-}
-
 L.DivIcon.SVGIcon = L.DivIcon.extend({
     options: {
         "circleText": "",
         "className": "svg-icon",
+        "circleAnchor": null, //defaults to 
         "circleColor": null, //defaults to color
         "circleOpacity": null, // defaults to opacity
         "circleFillColor": "rgb(255,255,255)",
@@ -70,6 +24,9 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     initialize: function(options) {
         options = L.Util.setOptions(this, options)
 
+        if (!options.circleAnchor) {
+            options.circleAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.x)/2)
+        }
         if (!options.circleColor) {
             options.circleColor = options.color
         }
@@ -86,10 +43,10 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             options.fillColor = options.color
         }
         if (!options.fontSize) {
-            options.fontSize = (options.iconSize.x/4) + "px"
+            options.fontSize = Number(options.iconSize.x/4) 
         }
         if (!options.iconAnchor) {
-            options.iconAnchor = L.point(options.iconSize.x/2, options.iconSize.y)
+            options.iconAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.y))
         }
         if (!options.popupAnchor) {
             options.popupAnchor = L.point(0, (-0.75)*(options.iconSize.y))
@@ -118,12 +75,11 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var circle = this._createCircle()
 
         options.html = this._createSVG()
-        return options
     },
     _createCircle: function() {
-        var cx = Number(this.options.iconSize.x) / 2
-        var cy = cx
-        var radius = cx * Number(this.options.circleRatio)
+        var cx = Number(this.options.circleAnchor.x) 
+        var cy = Number(this.options.circleAnchor.y)
+        var radius = this.options.iconSize.x/2 * Number(this.options.circleRatio)
         var fill = this.options.circleFillColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleFillOpacity + ")")
         var stroke = this.options.circleColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleOpacity + ")")
         var strokeWidth = this.options.circleWeight
@@ -172,8 +128,8 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         return svg
     },
     _createText: function() {
-        var fontSize = this.options.fontSize
-        var lineHeight = Number(fontSize.replace("px","")) 
+        var fontSize = this.options.fontSize + "px"
+        var lineHeight = Number(this.options.fontSize)
 
         var x = Number(this.options.iconSize.x) / 2
         var y = x + (lineHeight * 0.35) //35% was found experimentally 
@@ -188,4 +144,50 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
 
 L.divIcon.svgIcon = function(options) {
     return new L.DivIcon.SVGIcon(options)
+}
+
+L.Marker.SVGMarker = L.Marker.extend({
+    options: {
+        "iconFactory": L.divIcon.svgIcon,
+        "iconOptions": {}
+    },
+    initialize: function(latlng, options) {
+        options = L.Util.setOptions(this, options)
+        options.icon = options.iconFactory(options.iconOptions)
+        this._latlng = latlng
+    },
+    onAdd: function(map) {
+        L.Marker.prototype.onAdd.call(this, map)
+    },
+    setStyle: function(style) {
+        if (this._icon) {
+            var svg = this._icon.children[0]
+            var iconBody = this._icon.children[0].children[0]
+            var iconCircle = this._icon.children[0].children[1]
+
+            if (style.color && !style.iconOptions) {
+                var stroke = style.color.replace("rgb","rgba").replace(")", ","+this.options.icon.options.opacity+")")
+                var fill = style.color.replace("rgb","rgba").replace(")", ","+this.options.icon.options.fillOpacity+")")
+                iconBody.setAttribute("stroke", stroke)
+                iconBody.setAttribute("fill", fill)
+                iconCircle.setAttribute("stroke", stroke)
+
+                this.options.icon.fillColor = fill
+                this.options.icon.color = stroke
+                this.options.icon.circleColor = stroke
+            }
+            if (style.opacity) {
+                this.setOpacity(style.opacity)
+            }
+            if (style.iconOptions) {
+                if (style.color) { style.iconOptions.color = style.color }
+                iconOptions = L.Util.setOptions(this.options.icon, style.iconOptions)
+                this.setIcon(L.divIcon.svgIcon(iconOptions))
+            }
+        }
+    }
+})
+
+L.marker.svgMarker = function(latlng, options) {
+    return new L.Marker.SVGMarker(latlng, options)
 }
