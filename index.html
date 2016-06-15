@@ -4,10 +4,23 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="svg-icon.js"></script>
-        <script type="text/javascript>
+        <style>
+            #iconOptions {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 200px;
+                height: 100%;
+            }
+            #iconOptions label {
+                display: block;
+            }
+        </style>
+        <script type="text/javascript">
         </script>
     </head>
     <div id="iconOptions">
+        <label id="circleText">Circle Text: <input type=text></label>
     </div>
     <div id="map"></div>
 </html>
