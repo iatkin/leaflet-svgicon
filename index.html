@@ -4,7 +4,18 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="svg-icon.js"></script>
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
         <style>
+            body {
+                font-family: -apple-system, sans-serif;
+            }
+            #example-map {
+                position: absolute;
+                left: 420px;
+                top: 10px;
+                height: 200px;
+                width: 200px;
+            }
             #iconOptions {
                 position: absolute;
                 top: 10px;
@@ -14,30 +25,73 @@
             }
             #iconOptions label {
                 display: block;
+                margin-bottom: 5px;
+            }
+            label input {
+                width: 200px;
+                position: absolute;
+                right: 0px;
+                margin: 0px;
+            }
+            label span {
+                display: inline-block;
+                width: 190px;
+                text-align: right;
             }
         </style>
-        <script type="text/javascript">
+        <script>
+            var testMarker = null
+            var map = null
+            $(document).ready(function() {
+                map = L.map("example-map", {
+                    "center": [0,0],
+                    "zoom": 12,
+                    "zoomControl": false
+                })
+                testMarker = L.marker.svgMarker([0,0])
+                map.addLayer(testMarker)
+
+                $("#modify-button").on("click", function() {
+                    var iconOptions = {}
+
+                    $("#iconOptions label").each(function() {
+                        var key = $(this).attr("id")
+                        var value = $(this).children("input").val()
+                        if (value[0] == "[") {
+                            value = JSON.parse(value)
+                            value = L.point(value[0], value[1])
+                        }
+                        if (value) {
+                            iconOptions[key] = value
+                        }
+                    })
+
+                    testMarker.setIcon(L.divIcon.svgIcon(iconOptions))
+                })
+            })
         </script>
     </head>
     <div id="iconOptions">
-        <label id="circleAnchor">Circle Anchor: <input type=text></label>
-        <label id="circleColor">Circle Color: <input type=text></label>
-        <label id="circleOpacity">Circle Opacity: <input type=text></label>
-        <label id="circleFillColor">Circle Fill Color: <input type=text></label>
-        <label id="circleFillOpacity">Circle Fill Opacity: <input type=text></label>
-        <label id="circleRatio">Circle Ratio: <input type=text></label>
-        <label id="circleText">Circle Text: <input type=text></label>
-        <label id="circleWeight">Circle Weight: <input type=text></label>
-        <label id="color">Color: <input type=text></label>
-        <label id="fillColor">Fill Color: <input type=text></label>
-        <label id="fillOpacity">Fill Opacity: <input type=text></label>
-        <label id="fontColor">Font Color: <input type=text></label>
-        <label id="fontOpacity">Font Opacity: <input type=text></label>
-        <label id="fontSize">FontSize: <input type=text></label>
-        <label id="iconAnchor">Icon Anchor: <input type=text></label>
-        <label id="iconSize">Icon Size: <input type=text></label>
-        <label id="opacity">Opacity: <input type=text></label>
-        <label id="weight">Weight: <input type=text></label>
+        <div>Specify points in the format [x,y]</div>
+        <label id="circleAnchor"><span>Circle Anchor</span> <input type=text placeholder="[iconSize.x/2, iconSize.x/2]"></label>
+        <label id="circleColor"><span>Circle Color</span> <input type=text placeholder="same as color"></label>
+        <label id="circleOpacity"><span>Circle Opacity</span> <input type=text placeholder="same as opacity"></label>
+        <label id="circleFillColor"><span>Circle Fill Color</span> <input type=text placeholder="rgb(255,255,255)"></label>
+        <label id="circleFillOpacity"><span>Circle Fill Opacity</span> <input type=text placeholder="same as opacity"></label>
+        <label id="circleRatio"><span>Circle Ratio</span> <input type=text placeholder="0.5"></label>
+        <label id="circleText"><span>Circle Text</span> <input type=text placeholder='""'></label>
+        <label id="circleWeight"><span>Circle Weight</span> <input type=text placeholder="2"></label>
+        <label id="color"><span>Color</span> <input type=text placeholder="rgb(0,102,255)"></label>
+        <label id="fillColor"><span>Fill Color</span> <input type=text placeholder="same as color"></label>
+        <label id="fillOpacity"><span>Fill Opacity</span> <input type=text placeholder="0.4"></label>
+        <label id="fontColor"><span>Font Color</span> <input type=text placeholder="rgb(0,0,0)"></label>
+        <label id="fontOpacity"><span>Font Opacity</span> <input type=text placeholder="1"></label>
+        <label id="fontSize"><span>FontSize</span> <input type=text placeholder="iconSize.x/4"></label>
+        <label id="iconAnchor"><span>Icon Anchor</span> <input type=text placeholder="[iconSize.x/2, iconSize.y]"></label>
+        <label id="iconSize"><span>Icon Size</span> <input type=text placeholder="[32,48]"></label>
+        <label id="opacity"><span>Opacity</span> <input type=text placeholder="1"></label>
+        <label id="weight"><span>Weight</span> <input type=text placeholder="2"></label>
+        <input type="button" value="Modify Marker Icon" id="modify-button">
     </div>
-    <div id="map"></div>
+    <div id="example-map"></div>
 </html>
