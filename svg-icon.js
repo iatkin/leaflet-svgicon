@@ -52,25 +52,6 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             options.popupAnchor = L.point(0, (-0.75)*(options.iconSize.y))
         }
 
-        ["circleColor", "circleFillColor", "color", "fillColor", "fontColor"].map(function(key) {
-            if (options[key].startsWith("#")) {
-                var color = options[key].replace("#", "")
-                var red = Number("0x" + color.slice(0,2))
-                var green = Number("0x" + color.slice(2,4))
-                var blue = Number("0x" + color.slice(4,6))
-                
-                options[key] = "rgb(" + red + "," + green + "," + blue + ")"
-            }
-            else if (options[key].startsWith("rgba(")) {
-                var color = options[key].replace("rgba(", "").replace(")", "").split(",")
-                var red = color[0]
-                var green = color[1]
-                var blue = color[2]
-
-                options[key] = "rgb(" + red + "," + green + "," + blue + ")"
-            }
-        })
-
         var path = this._createPath()
         var circle = this._createCircle()
 
