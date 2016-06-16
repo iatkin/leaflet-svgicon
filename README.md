@@ -3,12 +3,14 @@ L.DivIcon.SVGIcon is a simple and customizable SVG marker icon with no external 
 
 Also included is L.Marker.SVGMarker, a small Marker wrapper class for SVGIcons with a setStyle implementation that handles marker opacity changes, monochromatic color changes and changes to specific icon options.
 
+There are also 2 example subclasses provided. One is rhombus shaped and includes an example SVGMarker subclass specific to this icon. The other is shaped like the Washington Monument.
+
 ## Requirements
 - Leaflet 0.7+ (earlier versions may work, but are untested) 
 - Browser support for SVG
 
 ## Demo
-The following example is centered on the Washington Monument and allows for the manipulation of all icon options. The default options are shown as placeholder text. Also included is an option to view and manipulate the two example subclasses, a rhombus-shaped icon and a Washington Monument icon. 
+The following example is centered on the Washington Monument and allows for the manipulation of all icon options. The default options are shown as placeholder text. The icon can also be changed to either of the example subclasses.
 
 [Example](http://iatkin.github.io/leaflet-svgicon/)
 
@@ -66,22 +68,22 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 
 ## Methods
 ### L.DivIcon.SVGIcon
-*This class does not include any methods that are intended to be user accessible as part of normal use. The following are the internal methods use to generate the icon. They may be modified in a subclass, but all methods with the exception of* _createPathDescription *may be modified using icon options only. Due to the computations inherent in creating a scalable path description,* _createPathDescription *must be modified in order to change the overall icon shape.*
+*This class does not include any methods that are intended to be user accessible as part of normal use. The following are the internal methods used to generate the icon. All methods with the exception of* _createPathDescription *are customizable using icon options only. Due to the computations inherent in creating a scalable path description,* _createPathDescription *must be ov in order to change the overall icon shape.*
 
 #### _createCircle()
-Creates the icon's inner circle. This method is 100% customizable using icon options exclusively, and should not need to be modified in most cases. 
+Creates the icon's inner circle. This method is 100% customizable using icon options exclusively, and should not need to be overridden in most cases. 
 
 #### _createPath()
 Creates the main body of the icon. All aspects of the icon body with the exception of the shape itself may be customized used icon options.
 
 #### _createPathDescription()
-Creates the drawing instructions for the icon's shape. This method must be modified in order to change the icon's shape. See the **Advanced Customization** section for more information.
+Creates the drawing instructions for the icon's shape. This method must be overridden in order to change the icon's shape. See the **Advanced Customization** section for more information.
 
 #### _createSVG()
-Creates the final SVG element. This method should not need to be modified unless a subclass requires additional elements. Note that HTML elements need to be placed outside the main <svg> element.
+Creates the final SVG element. This method should not need to be overridden. Note that if adding HTML elements, they need to be placed outside the main <svg> element.
 
 #### _createText()
-Creates the SVG text element. More text can be fit without modifying this method by increasing the size of the icon and specifying a font size.
+Creates the SVG text element. More text can be fit without overriding this method by increasing the size of the icon and specifying a font size.
 
 ### L.Marker.SVGMarker
 
@@ -102,4 +104,4 @@ This repository includes an example L.DivIcon.SVGIcon.RhombusIcon subclass and a
 ### Disabling the icon's inner circle or text
 By default, the icon has a semi-transparent body with an opaque white circle in order to increase visibility and allow for a small amount of easily legible text. If you don't need the circle, the simplest way to exclude it is to set "circleRatio" to 0 which will result in a circle with a radius of zero. 
 
-If you will be creating a large number of icons or writing a subclass that doesn't need either the circle or displayed text, generating the circle and text elements can be disabled entirely by either modifying *_createCircle*/*_createText* to return an empty string or modifying *_createSVG* to exclude calling the creation method for the unneeded elements.
+If you will be creating a large number of icons or writing a subclass that doesn't need either the circle or displayed text, generating the circle and text elements can be disabled entirely by either overridding *_createCircle*/*_createText* to return an empty string or overriding *_createSVG* to exclude calling the creation methods for the unneeded elements.
