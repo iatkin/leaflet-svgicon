@@ -1,3 +1,8 @@
+//Leaflet-SVGIcon
+//SVG icon for any marker class
+//Ilya Atkin
+//ilya.atkin@unh.edu
+
 L.DivIcon.SVGIcon = L.DivIcon.extend({
     options: {
         "circleText": "",
