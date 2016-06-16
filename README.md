@@ -9,6 +9,7 @@ Also included is L.Marker.SVGMarker, a small Marker wrapper class for SVGIcons w
 
 ## Demo
 The following example is centered on the Washington Monument and allows for the manipulation of all icon options. The default options are shown as placeholder text. Also included is an option to view and manipulate the two example subclasses, a rhombus-shaped icon and a Washington Monument icon. 
+
 [Example](http://iatkin.github.io/leaflet-svgicon/)
 
 ## Usage
@@ -102,5 +103,3 @@ This repository includes an example L.DivIcon.SVGIcon.RhombusIcon subclass and a
 By default, the icon has a semi-transparent body with an opaque white circle in order to increase visibility and allow for a small amount of easily legible text. If you don't need the circle, the simplest way to exclude it is to set "circleRatio" to 0 which will result in a circle with a radius of zero. 
 
 If you will be creating a large number of icons or writing a subclass that doesn't need either the circle or displayed text, generating the circle and text elements can be disabled entirely by either modifying *_createCircle*/*_createText* to return an empty string or modifying *_createSVG* to exclude calling the creation method for the unneeded elements.
-
-
