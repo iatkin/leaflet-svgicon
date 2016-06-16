@@ -2,7 +2,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     options: {
         "circleText": "",
         "className": "svg-icon",
-        "circleAnchor": null, //defaults to 
+        "circleAnchor": null, //defaults to [iconSize.x/2, iconSize.x/2]
         "circleColor": null, //defaults to color
         "circleOpacity": null, // defaults to opacity
         "circleFillColor": "rgb(255,255,255)",
