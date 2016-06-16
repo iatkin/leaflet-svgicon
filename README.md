@@ -8,7 +8,8 @@ Also included is L.Marker.SVGMarker, a small Marker wrapper class for SVGIcons w
 - Browser support for SVG
 
 ## Demo
-*Forthcoming*
+The following example is centered on the Washington Monument and allows for the manipulation of all icon options. The default options are shown as placeholder text. Also included is an option to view and manipulate the two example subclasses, a rhombus-shaped icon and a Washington Monument icon. 
+[Example](http://iatkin.github.io/leaflet-svgicon/)
 
 ## Usage
 - Include the source file
