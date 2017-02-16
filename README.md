@@ -68,7 +68,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 
 ## Methods
 ### L.DivIcon.SVGIcon
-*This class does not include any methods that are intended to be user accessible as part of normal use. The following are the internal methods used to generate the icon. All methods with the exception of* _createPathDescription *are customizable using icon options only. Due to the computations inherent in creating a scalable path description,* _createPathDescription *must be ov in order to change the overall icon shape.*
+*This class does not include any methods that are intended to be user accessible as part of normal use. The following are the internal methods used to generate the icon. All methods with the exception of* _createPathDescription *are customizable using icon options only. Due to the computations inherent in creating a scalable path description,* _createPathDescription *must be overridden in order to change the overall icon shape.*
 
 #### _createCircle()
 Creates the icon's inner circle. This method is 100% customizable using icon options exclusively, and should not need to be overridden in most cases. 
