@@ -90,11 +90,13 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     _createPath: function() {
         var pathDescription = this._createPathDescription()
         var strokeWidth = this.options.weight
-        var stroke = this.options.color.replace("rgb(", "rgba(").replace(")", "," + this.options.opacity + ")")
-        var fill = this.options.fillColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fillOpacity + ")")
+        var stroke = this.options.color
+        var strokeOpacity = this.options.opacity
+        var fill = this.options.fillColor
+        var fillOpacity = this.options.fillOpacity
         var className = this.options.className + "-path"
 
-        var path = '<path class="' + className + '" d="' + pathDescription + '" stroke-width="' + strokeWidth + '" stroke="' + stroke + '" fill="' + fill + '"/>'
+        var path = '<path class="' + className + '" d="' + pathDescription + '" stroke-width="' + strokeWidth + '" stroke="' + stroke + '" stroke-opacity="' + strokeOpacity +'" fill="' + fill + '" fill-opacity="' + fillOpacity + '"/>'
 
         return path
     },
