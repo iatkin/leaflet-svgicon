@@ -23,6 +23,10 @@ The following example is centered on the Washington Monument and allows for the 
 ````js
 var marker = new L.Marker.SVGMarker(latlng)
 ````
+- Use an SVGMarker with customized icon options
+````js
+var marker = new L.Marker.SVGMarker(latlng, { iconOptions: { color: "rgb(0,0,100)" }})
+````
 - Use any place Icons are accepted
 ````js
 var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
@@ -59,7 +63,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 
 ### L.Marker.SVGMarker
 
-*All standard L.Marker options are supported.*
+*All standard L.Marker options are supported excluding **icon**. To customize the icon, pass a dictionary of icon options using the **iconOptions** SVGMarker option. There is an example in the Usage section.*
 
 |Option|Type|Default|Description|
 |------|----|-------|-----------|
