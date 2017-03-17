@@ -139,9 +139,7 @@ L.Marker.SVGMarker = L.Marker.extend({
     },
     initialize: function(latlng, options) {
         options = L.Util.setOptions(this, options)
-        if (!options.icon) {
-            options.icon = options.iconFactory(options.iconOptions)
-        }
+        options.icon = options.iconFactory(options.iconOptions)
         this._latlng = latlng
     },
     onAdd: function(map) {
