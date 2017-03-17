@@ -61,12 +61,14 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var cx = Number(this.options.circleAnchor.x) 
         var cy = Number(this.options.circleAnchor.y)
         var radius = this.options.iconSize.x/2 * Number(this.options.circleRatio)
-        var fill = this.options.circleFillColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleFillOpacity + ")")
-        var stroke = this.options.circleColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleOpacity + ")")
+        var fill = this.options.circleFillColor
+        var fillOpacity = this.options.circleFillOpacity
+        var stroke = this.options.circleColor
+        var strokeOpacity = this.options.circleOpacity
         var strokeWidth = this.options.circleWeight
         var className = this.options.className + "-circle"
 
-        var circle = '<circle class="' + className + '" cx="' + cx + '" cy="' + cy + '" r="' + radius + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + strokeWidth + '"/>'
+        var circle = '<circle class="' + className + '" cx="' + cx + '" cy="' + cy + '" r="' + radius + '" fill="' + fill + '" fill-opacity="' + fillOpacity + '" stroke="' + stroke + '" stroke-opacity="' + strokeOpacity + '" stroke-width="' + strokeWidth + '"/>'
 
         return circle
     },
