@@ -82,8 +82,8 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var margin = weight / 2
 
         var startPoint = "M " + margin + " " + (width/2) + " "
-        var leftLine = "L " + (width/2) + " " + (height - weight) + " "
-        var rightLine = "L " + (width - margin) + " " + (width/2) + " "
+        var leftLine = "C " + margin + " " + width + " " + (width/2) + " " + width + " " + (width/2) + " " + (height - weight) + " "
+        var rightLine = "C " + (width/2) + " " + width + " " + (width - margin) + " " + (width) + " " + (width - margin) + " " + (width/2) + " "
         var arc = "A " + (width/4) + " " + (width/4) + " 0 0 0 " + margin + " " + (width/2) + " Z"
 
         var d = startPoint + leftLine + rightLine + arc
