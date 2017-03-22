@@ -35,8 +35,6 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 ## Properties
 ### L.DivIcon.SVGIcon
 
-**All colors must be specified as "rgb(...)".**
-
 *Unspecified Icon options are ignored*
 
 |Option|Type|Default|Description|
