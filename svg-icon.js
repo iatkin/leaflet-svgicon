@@ -63,16 +63,20 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         options.html = this._createSVG()
     },
     _createCircle: function() {
-        var cx = Number(this.options.circleAnchor.x) 
+        var cx = Number(this.options.circleAnchor.x)
         var cy = Number(this.options.circleAnchor.y)
         var radius = this.options.iconSize.x/2 * Number(this.options.circleRatio)
-        var fill = this.options.circleFillColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleFillOpacity + ")")
-        var stroke = this.options.circleColor.replace("rgb(", "rgba(").replace(")", "," + this.options.circleOpacity + ")")
+        var fill = this.options.circleFillColor
+        var fillOpacity = this.options.circleFillOpacity
+        var stroke = this.options.circleColor
+        var strokeOpacity = this.options.circleOpacity
         var strokeWidth = this.options.circleWeight
-        var className = this.options.className + "-circle"
-
-        var circle = '<circle class="' + className + '" cx="' + cx + '" cy="' + cy + '" r="' + radius + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + strokeWidth + '"/>'
-
+        var className = this.options.className + "-circle"        
+       
+        var circle = '<circle class="' + className + '" cx="' + cx + '" cy="' + cy + '" r="' + radius +
+            '" fill="' + fill + '" fill-opacity="'+ fillOpacity + 
+            '" stroke="' + stroke + '" stroke-opacity=' + strokeOpacity + '" stroke-width="' + strokeWidth + '"/>'
+        
         return circle
     },
     _createPathDescription: function() {
@@ -93,11 +97,15 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     _createPath: function() {
         var pathDescription = this._createPathDescription()
         var strokeWidth = this.options.weight
-        var stroke = this.options.color.replace("rgb(", "rgba(").replace(")", "," + this.options.opacity + ")")
-        var fill = this.options.fillColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fillOpacity + ")")
+        var stroke = this.options.color
+        var strokeOpacity = this.options.Opacity
+        var fill = this.options.fillColor
+        var fillOpacity = this.options.fillOpacity
         var className = this.options.className + "-path"
 
-        var path = '<path class="' + className + '" d="' + pathDescription + '" stroke-width="' + strokeWidth + '" stroke="' + stroke + '" fill="' + fill + '"/>'
+        var path = '<path class="' + className + '" d="' + pathDescription +
+            '" stroke-width="' + strokeWidth + '" stroke="' + stroke + '" stroke-opacity="' + strokeOpacity +
+            '" fill="' + fill + '" fill-opacity="' + fillOpacity + '"/>'
 
         return path
     },
