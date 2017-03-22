@@ -73,3 +73,13 @@ L.DivIcon.SVGIcon.WashingtonMonumentIcon = L.DivIcon.SVGIcon.extend({
 L.divIcon.svgIcon.washingtonMonumentIcon = function(options) {
     return new L.DivIcon.SVGIcon.WashingtonMonumentIcon(options)
 }
+
+L.Marker.SVGMarker.WashingtonMonumentMarker = L.Marker.SVGMarker.extend({
+    options: {
+        "iconFactory": L.divIcon.svgIcon.washingtonMonumentIcon
+    }
+})
+
+L.marker.svgMarker.washingtonMonumentMarker = function(latlng, options) {
+    return new L.Marker.SVGMarker.WashingtonMonumentMarker(latlng, options)
+}
