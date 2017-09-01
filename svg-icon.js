@@ -28,9 +28,16 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     },
     initialize: function(options) {
         options = L.Util.setOptions(this, options)
+        
+        //iconSize needs to be converted to a Point object if it is not passed as one
+        options.iconSize = L.point(options.iconSize)
 
+        //in addition to setting option dependant defaults, Point-based options are converted to Point objects
         if (!options.circleAnchor) {
             options.circleAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.x)/2)
+        }
+        else {
+            options.circleAnchor = L.point(options.circleAnchor)
         }
         if (!options.circleColor) {
             options.circleColor = options.color
@@ -53,8 +60,14 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         if (!options.iconAnchor) {
             options.iconAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.y))
         }
+        else {
+            options.iconAnchor = L.point(options.iconAnchor)
+        }
         if (!options.popupAnchor) {
             options.popupAnchor = L.point(0, (-0.75)*(options.iconSize.y))
+        }
+        else {
+            options.popupAnchor = L.point(options.popupAnchor)
         }
 
         var path = this._createPath()
