@@ -188,7 +188,7 @@ L.Marker.SVGMarker = L.Marker.extend({
             }
             if (style.iconOptions) {
                 if (style.color) { style.iconOptions.color = style.color }
-                iconOptions = L.Util.setOptions(this.options.icon, style.iconOptions)
+                var iconOptions = L.Util.setOptions(this.options.icon, style.iconOptions)
                 this.setIcon(L.divIcon.svgIcon(iconOptions))
             }
         }
