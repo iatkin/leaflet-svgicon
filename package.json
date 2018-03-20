@@ -1,0 +1,26 @@
+{
+  "name": "leaflet-svgicon",
+  "version": "1.0.0",
+  "description": "SVG icon for any marker class",
+  "main": "svg-icon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iatkin/leaflet-svgicon.git"
+  },
+  "keywords": [
+    "leaflet",
+    "svg",
+    "svgicon",
+    "marker",
+    "icon"
+  ],
+  "author": "timwis <tim@timwis.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iatkin/leaflet-svgicon/issues"
+  },
+  "homepage": "https://github.com/iatkin/leaflet-svgicon#readme"
+}
