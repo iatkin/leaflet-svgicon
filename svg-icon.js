@@ -128,7 +128,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var text = this._createText()
         var className = this.options.className + "-svg"
 
-        var style = "width:" + this.options.iconSize.x + "; height:" + this.options.iconSize.y + ";"
+        var style = "width:" + this.options.iconSize.x + "px; height:" + this.options.iconSize.y + "px;"
 
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + path + circle + text + '</svg>'
 
