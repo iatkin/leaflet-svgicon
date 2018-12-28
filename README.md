@@ -54,10 +54,12 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 |fontColor|String|"rgb(0,0,0)"|Color of the icon's center text|
 |fontOpacity|Number|1|Opacity of the icon's center text|
 |fontSize|Number|iconSize.x/4|Font size in pixels of the icon's center text|
+|fontWeight|Number|bold|Font weight. [List of possible values](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-weight)
 |iconAnchor|Point|[iconSize.x/2, iconSize.y]|The point to align over the marker's geographic location|
 |iconSize|Point|[32,48]|The size of the icon|
 |opacity|Number|1|Opacity of the icon's border|
 |popupAnchor|Point|[0,(-0.75*iconSize.y)]|Point of origin for bound popups relative to the iconAnchor|
+|weight|Number|2|Weight of the icon's border|
 
 ### L.Marker.SVGMarker
 
