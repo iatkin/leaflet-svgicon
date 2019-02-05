@@ -27,7 +27,7 @@ L.DivIcon.SVGIcon.RhombusIcon = L.DivIcon.SVGIcon.extend({
         var lineHeight = Number(this.options.fontSize)
 
         var x = Number(this.options.iconSize.x) / 2
-        var y = x + (lineHeight * 0.35) //35% was found experimentally 
+        var y = Number(this.options.iconSize.y)/ 2
         var circleText = this.options.circleText
         var textColor = this.options.fontColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fontOpacity + ")")
 
