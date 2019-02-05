@@ -20,20 +20,6 @@ L.DivIcon.SVGIcon.RhombusIcon = L.DivIcon.SVGIcon.extend({
         var d = startPoint + bottomLeftLine + bottomRightLine + topLeftLine
 
         return d
-    },
-    _createText: function() {
-        var fontSize = this.options.fontSize + "px"
-        var fontWeight = this.options.fontWeight
-        var lineHeight = Number(this.options.fontSize)
-
-        var x = this.options.circleAnchor.x
-        var y = this.options.circleAnchor.y + (lineHeight * 0.35)
-        var circleText = this.options.circleText
-        var textColor = this.options.fontColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fontOpacity + ")")
-
-        var text = '<text text-anchor="middle" x="' + x + '" y="' + y + '" style="font-size: ' + fontSize + '; font-weight: ' + fontWeight +'" fill="' + textColor + '">' + circleText + '</text>'
-
-        return text
     }
 })
 
