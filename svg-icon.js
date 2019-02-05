@@ -20,6 +20,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "fontColor": "rgb(0, 0, 0)",
         "fontOpacity": "1",
         "fontSize": null, // defaults to iconSize.x/4
+        "fontWeight": "normal",
         "iconAnchor": null, //defaults to [iconSize.x/2, iconSize.y] (point tip)
         "iconSize": L.point(32,48),
         "opacity": 1,
@@ -111,7 +112,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var pathDescription = this._createPathDescription()
         var strokeWidth = this.options.weight
         var stroke = this.options.color
-        var strokeOpacity = this.options.Opacity
+        var strokeOpacity = this.options.opacity
         var fill = this.options.fillColor
         var fillOpacity = this.options.fillOpacity
         var className = this.options.className + "-path"
@@ -136,6 +137,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     },
     _createText: function() {
         var fontSize = this.options.fontSize + "px"
+        var fontWeight = this.options.fontWeight
         var lineHeight = Number(this.options.fontSize)
 
         var x = Number(this.options.iconSize.x) / 2
@@ -143,7 +145,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var circleText = this.options.circleText
         var textColor = this.options.fontColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fontOpacity + ")")
 
-        var text = '<text text-anchor="middle" x="' + x + '" y="' + y + '" style="font-size: ' + fontSize + '" fill="' + textColor + '">' + circleText + '</text>'
+        var text = '<text text-anchor="middle" x="' + x + '" y="' + y + '" style="font-size: ' + fontSize + '; font-weight: ' + fontWeight +'" fill="' + textColor + '">' + circleText + '</text>'
 
         return text
     }
