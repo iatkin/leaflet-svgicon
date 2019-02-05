@@ -54,6 +54,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 |fontColor|String|"rgb(0,0,0)"|Color of the icon's center text|
 |fontOpacity|Number|1|Opacity of the icon's center text|
 |fontSize|Number|iconSize.x/4|Font size in pixels of the icon's center text|
+|fontWeight|String|"normal"|The CSS font-weight of the circle's text|
 |iconAnchor|Point|[iconSize.x/2, iconSize.y]|The point to align over the marker's geographic location|
 |iconSize|Point|[32,48]|The size of the icon|
 |opacity|Number|1|Opacity of the icon's border|
