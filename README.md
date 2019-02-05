@@ -58,6 +58,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 |iconSize|Point|[32,48]|The size of the icon|
 |opacity|Number|1|Opacity of the icon's border|
 |popupAnchor|Point|[0,(-0.75*iconSize.y)]|Point of origin for bound popups relative to the iconAnchor|
+|weight|Number|2|The width of the icon's border|
 
 ### L.Marker.SVGMarker
 
