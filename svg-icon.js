@@ -53,9 +53,6 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             options.popupAnchor = L.point(0, (-0.75)*(options.iconSize.y))
         }
 
-        var path = this._createPath()
-        var circle = this._createCircle()
-
         options.html = this._createSVG()
     },
     _createCircle: function() {
