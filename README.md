@@ -6,7 +6,7 @@ Also included is L.Marker.SVGMarker, a small Marker wrapper class for SVGIcons w
 There are also 2 example subclasses provided. One is rhombus shaped and includes an example SVGMarker subclass specific to this icon. The other is shaped like the Washington Monument.
 
 ## Requirements
-- Leaflet 0.7+ (earlier versions may work, but are untested) 
+- Leaflet 0.7+ (earlier versions may work, but are untested; 1.4.0 has been tested)
 - Browser support for SVG
 
 ## Demo
