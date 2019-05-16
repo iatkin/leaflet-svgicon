@@ -21,11 +21,11 @@ The following example is centered on the Washington Monument and allows for the 
 ````
 - Use an SVGMarker
 ````js
-var marker = new L.Marker.SVGMarker(latlng)
+var marker = new L.marker.svgMarker(latlng)
 ````
 - Use an SVGMarker with customized icon options
 ````js
-var marker = new L.Marker.SVGMarker(latlng, { iconOptions: { color: "rgb(0,0,100)" }})
+var marker = new L.marker.svgMarker(latlng, { iconOptions: { color: "rgb(0,0,100)" }})
 ````
 - Use any place Icons are accepted
 ````js
