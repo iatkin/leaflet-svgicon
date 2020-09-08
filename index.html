@@ -10,6 +10,9 @@
             body {
                 font-family: -apple-system, sans-serif;
             }
+            .disabled {
+                color: grey;
+            }
             #example-map {
                 position: absolute;
                 left: 420px;
@@ -28,20 +31,24 @@
                 display: block;
                 margin-bottom: 5px;
             }
-            label input {
+            label {
+                width: 400px;
+            }
+            label input, label select {
                 width: 200px;
                 position: absolute;
-                right: 0px;
+                left: 185px;
                 margin: 0px;
+                display: inline-block;
             }
             label span {
                 display: inline-block;
-                width: 190px;
+                width: 180px;
                 text-align: right;
             }
             #modify-button {
                 position: absolute;
-                right: 0px;
+                left: 185px;
             }
         </style>
         <script>
@@ -57,26 +64,29 @@
                 var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 });
-                map.addLayer(baseLayer)
+//              map.addLayer(baseLayer)
                 testMarker = L.marker.svgMarker(latlng)
                 map.addLayer(testMarker)
   
                 var changeIcon = function() {
-                      var iconOptions = {}
-  
-                      $("#iconOptions > label").each(function() {
-                          var key = $(this).attr("id")
-                          var value = $(this).children("input").val()
-                          if (value[0] == "[") {
-                              value = JSON.parse(value)
-                              value = L.point(value[0], value[1])
-                          }
-                          if (value) {
-                              iconOptions[key] = value
-                          }
-                      })
-  
-                      testMarker.setIcon(testMarker.options.iconFactory(iconOptions))
+                    var iconOptions = {}
+
+                    $("#iconOptions > label").each(function() {
+                        var key = $(this).attr("id")
+                        var value = $(this).children("input").val()
+
+                        if (value[0] == "[") {
+                            value = JSON.parse(value)
+                            value = L.point(value[0], value[1])
+                        }
+                        if (value) {
+                            iconOptions[key] = value
+                        }
+                    })
+
+                    iconOptions["shadowEnable"] = $("#shadowEnable input")[0].checked
+
+                    testMarker.setIcon(testMarker.options.iconFactory(iconOptions))
                 }
 
                 $("#modify-button").on("click", changeIcon)
@@ -119,6 +129,18 @@
                     }
                     changeIcon()
                 })
+
+                $("#shadowEnable input").change(function() {
+                    if (this.checked == true) {
+                        $("label[id^=\"shadow\"]").removeClass("disabled")
+                    }
+                    else {
+                        $("label[id^=\"shadow\"]").addClass("disabled")
+                    }
+                    $("label[id^=\"shadow\"] input").attr("disabled", !this.checked)
+                    $("#shadowEnable").removeClass("disabled")
+                    $("#shadowEnable input").attr("disabled", false)
+                })
             })
         </script>
     </head>
@@ -148,6 +170,13 @@
         <label id="iconSize"><span>Icon Size</span> <input type=text placeholder="[32,48]"></label>
         <label id="opacity"><span>Border Opacity</span> <input type=text placeholder="1"></label>
         <label id="weight"><span>Border Weight</span> <input type=text placeholder="2"></label>
+        <br>
+        <label id="shadowEnable"><span>Enable Shadow</span> <input style='width: 20px' type=checkbox></label>
+        <label id="shadowAngle" class='disabled'><span>Shadow Angle</span> <input type=text placeholder="45" disabled></label>
+        <label id="shadowBlur" class='disabled'><span>Shadow Blur</span> <input type=text placeholder="1" disabled></label>
+        <label id="shadowColor" class='disabled'><span>Shadow Color</span> <input type=text placeholder="rgb(0,0,10)" disabled></label>
+        <label id="shadowHeight" class='disabled'><span>Shadow Height</span> <input type=text placeholder="0.75" disabled></label>
+        <label id="shadowOpacity" class='disabled'><span>Shadow Opacity</span> <input type=text placeholder="0.5" disabled></label>
         <div><input type="button" value="Modify Marker Icon" id="modify-button"><div>
     </div>
     <div id="example-map"></div>
