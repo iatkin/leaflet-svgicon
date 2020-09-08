@@ -31,6 +31,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "shadowEnable": false,
         "shadowLength": .75,
         "shadowOpacity": 0.5,
+        "shadowTranslate": L.point(0,0),
         "weight": 2
     },
     initialize: function(options) {
@@ -138,12 +139,13 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var height = this.options.shadowLength
         var opacity = this.options.shadowOpacity
         var blur = this.options.shadowBlur
+        var translate = this.options.shadowTranslate.x + "px, " + this.options.shadowTranslate.y + "px"
 
         var blurFilter = "<filter id='iconShadowBlur'><feGaussianBlur in='SourceGraphic' stdDeviation='" + blur + "'/></filter>"
 
         var shadow = '<path filter="url(#iconShadowBlur") class="' + className + '" d="' + pathDescription +
             '" fill="' + fill + '" stroke-width="' + strokeWidth + '" stroke="' + stroke + 
-            '" style="opacity: ' + opacity + '; ' + 'transform-origin: ' + origin +'; transform: translate(0, 0px) rotate(' + rotation + 'deg)  scale(1, '+ height +')' +
+            '" style="opacity: ' + opacity + '; ' + 'transform-origin: ' + origin +'; transform: rotate(' + rotation + 'deg) translate(' + translate + ') scale(1, '+ height +')' +
             '"/>'
 
         return blurFilter+shadow 
