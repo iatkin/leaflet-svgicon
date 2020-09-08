@@ -29,7 +29,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "shadowBlur": 1,
         "shadowColor": "rgb(0,0,10)",
         "shadowEnable": false,
-        "shadowHeight": .75,
+        "shadowLength": .75,
         "shadowOpacity": 0.5,
         "weight": 2
     },
@@ -135,7 +135,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
 
         var origin = (this.options.iconSize.x / 2) + "px " + (this.options.iconSize.y) + "px"
         var rotation = this.options.shadowAngle
-        var height = this.options.shadowHeight 
+        var height = this.options.shadowLength
         var opacity = this.options.shadowOpacity
         var blur = this.options.shadowBlur
 
@@ -158,9 +158,9 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var height = this.options.iconSize.y
             
         if (this.options.shadowEnable) {
-            width += this.options.iconSize.y * this.options.shadowHeight - (this.options.iconSize.x / 2)
+            width += this.options.iconSize.y * this.options.shadowLength - (this.options.iconSize.x / 2)
             width = Math.max(width, 32)
-            height += this.options.iconSize.y * this.options.shadowHeight
+            height += this.options.iconSize.y * this.options.shadowLength
         }
 
         var style = "width:" + width + "px; height:" + height
