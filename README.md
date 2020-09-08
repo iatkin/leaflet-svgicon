@@ -65,6 +65,7 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 |shadowEnable|Boolean|false|Whether to display the shadow|
 |shadowLength|Number|0.75|Ratio of the shadow's length to the icon's height|
 |shadowOpacity|Number|0.5|Opacity of the shadow|
+|shadowTranslate|Point|[0,0]|A modification of the shadow's location|
 |weight|Number|2|The width of the icon's border|
 
 ### L.Marker.SVGMarker
