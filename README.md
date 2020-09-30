@@ -1,5 +1,7 @@
 # Leaflet-SVGIcon
-L.DivIcon.SVGIcon is a simple and customizable SVG marker icon with no external library or file dependencies. By default, 1 emoji, 2 characters of text or about 3 numerals can fit inside the icon's inner circle. A shadow generated from the _createPathDescription method may also be added.
+L.DivIcon.SVGIcon is a simple and customizable SVG marker icon with no external library or file dependencies. By default, 1 emoji, 2 characters of text or about 3 numerals can fit inside the icon's inner circle. 
+
+A shadow generated from the _createPathDescription method may also be added. As currently implemented, shadows are most compatible with shapes ending in a point.
 
 Also included is L.Marker.SVGMarker, a small Marker wrapper class for SVGIcons with a setStyle implementation that handles marker opacity changes, monochromatic color changes and changes to specific icon options.
 
