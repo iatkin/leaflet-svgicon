@@ -25,6 +25,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "iconSize": L.point(32,48),
         "opacity": 1,
         "popupAnchor": null,
+        "rotateAngle": 0,
         "shadowAngle": 45,
         "shadowBlur": 1,
         "shadowColor": "rgb(0,0,10)",
@@ -42,7 +43,16 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
 
         //in addition to setting option dependant defaults, Point-based options are converted to Point objects
         if (!options.circleAnchor) {
-            options.circleAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.x)/2)
+            if (Number(options.rotateAngle) === 0 && Number(options.shadowAngle) <= 180) {
+                options.circleAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.x)/2)
+            } else {
+                var radius  = Number(options.iconSize.y) - Number(options.iconSize.x) / 2
+                // X = Cx + (r * cosine(degrees * pi / 180))
+                var circleX = Number(options.iconSize.x) * 1.5 + (radius * (Math.cos((options.rotateAngle - 90) * Math.PI / 180)))
+                // Y = Cy + (r * sine(degrees * pi / 180))
+                var circleY = Number(options.iconSize.y) + (radius * (Math.sin((options.rotateAngle - 90) * Math.PI / 180)))
+                options.circleAnchor = L.point(circleX, circleY)
+            }
         }
         else {
             options.circleAnchor = L.point(options.circleAnchor)
@@ -66,7 +76,11 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             options.fontSize = Number(options.iconSize.x/4) 
         }
         if (!options.iconAnchor) {
-            options.iconAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.y))
+            if (Number(options.rotateAngle) === 0 && Number(options.shadowAngle) <= 180) {
+                options.iconAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.y))
+            } else {
+                options.iconAnchor = L.point(Number(options.iconSize.x) * 1.5, Number(options.iconSize.y))
+            }
         }
         else {
             options.iconAnchor = L.point(options.iconAnchor)
@@ -100,13 +114,17 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     _createPathDescription: function() {
         var height = Number(this.options.iconSize.y)
         var width = Number(this.options.iconSize.x)
+        var startX = 0
+        if (Number(this.options.rotateAngle) !== 0 || Number(this.options.shadowAngle) > 180) {
+            startX = width
+        }
         var weight = Number(this.options.weight)
         var margin = weight / 2
 
-        var startPoint = "M " + margin + " " + (width/2) + " "
-        var leftLine = "L " + (width/2) + " " + (height - weight) + " "
-        var rightLine = "L " + (width - margin) + " " + (width/2) + " "
-        var arc = "A " + (width/4) + " " + (width/4) + " 0 0 0 " + margin + " " + (width/2) + " Z"
+        var startPoint = "M " + (startX + margin) + " " + (width/2) + " "
+        var leftLine = "L " + (startX + width/2) + " " + (height - weight) + " "
+        var rightLine = "L " + (startX + width - margin) + " " + (width/2) + " "
+        var arc = "A " + (width/4) + " " + (width/4) + " 0 0 0 " + (startX + margin) + " " + (width/2) + " Z"
 
         var d = startPoint + leftLine + rightLine + arc
 
@@ -121,9 +139,14 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var fillOpacity = this.options.fillOpacity
         var className = this.options.className + "-path"
 
+        var rotate = ''
+        if (Number(this.options.rotateAngle) != 0 || Number(this.options.shadowAngle) > 180) {
+            var origin = (this.options.iconAnchor.x) + "px " + (this.options.iconAnchor.y) + "px"
+            rotate = ' style="transform-origin: ' + origin + '; transform: rotate(' + this.options.rotateAngle + 'deg)"'
+        }
         var path = '<path class="' + className + '" d="' + pathDescription +
             '" stroke-width="' + strokeWidth + '" stroke="' + stroke + '" stroke-opacity="' + strokeOpacity +
-            '" fill="' + fill + '" fill-opacity="' + fillOpacity + '"/>'
+            '" fill="' + fill + '" fill-opacity="' + fillOpacity + '"' + rotate + '/>'
 
         return path
     },
@@ -134,7 +157,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
          var fill = this.options.shadowColor
          var className = this.options.className + "-shadow"
  
-         var origin = (this.options.iconSize.x / 2) + "px " + (this.options.iconSize.y) + "px"
+         var origin = (this.options.iconAnchor.x) + "px " + (this.options.iconAnchor.y) + "px"
          var rotation = this.options.shadowAngle
          var height = this.options.shadowLength
          var opacity = this.options.shadowOpacity
@@ -165,7 +188,13 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             height += this.options.iconSize.y * this.options.shadowLength
         }        
 
-        var style = "width:" + width + "px; height:" + height
+        if (Number(this.options.rotateAngle) != 0 || Number(this.options.shadowAngle) > 180) {
+            // make sure we have enough space to rotate the marker
+            width = Math.max(this.options.iconSize.x * 2, this.options.iconSize.y * 2)
+            height = width
+        }
+
+        var style = "width:" + width + "px; height:" + height +"px; "
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + text + '</svg>'
 
         return svg
