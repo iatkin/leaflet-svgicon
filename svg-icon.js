@@ -5,14 +5,17 @@
 
 L.DivIcon.SVGIcon = L.DivIcon.extend({
     options: {
-        "circleText": "",
         "className": "svg-icon",
         "circleAnchor": null, //defaults to [iconSize.x/2, iconSize.x/2]
         "circleColor": null, //defaults to color
-        "circleOpacity": null, // defaults to opacity
         "circleFillColor": "rgb(255,255,255)",
-        "circleFillOpacity": null, //default to opacity 
-        "circleRatio": 0.5,
+        "circleFillOpacity": null, //default to opacity
+        "circleImageAnchor": null, //defaults to [(iconSize.x - circleImageSize.x)/2, (iconSize.x - circleImageSize.x)/2]
+        "circleImagePath": null, //no default, preference over circleText
+        "circleImageSize": null, //defaults to [iconSize.x/4, iconSize.x/4] if circleImage is supplied
+        "circleOpacity": null, // defaults to opacity
+        "circleRatio": 0.5,        
+        "circleText": "",
         "circleWeight": null, //defaults to weight
         "color": "rgb(0,102,255)",
         "fillColor": null, // defaults to color
@@ -77,6 +80,21 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         else {
             options.popupAnchor = L.point(options.popupAnchor)
         }
+        if (options.circleImagePath && !options.circleImageSize) {
+            options.circleImageSize = L.point(Number(options.iconSize.x)/4, Number(options.iconSize.x)/4)
+        }
+        else {
+            options.circleImageSize = L.point(options.circleImageSize)
+        }
+        if (options.circleImagePath && !options.circleImageAnchor) {
+            options.circleImageAnchor = L.point(
+                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2,
+                (Number(options.iconSize.x) - Number(options.circleImageSize.y))/2
+            )
+        }
+        else {
+            options.circleImageAnchor = L.point(options.circleImageAnchor)
+        }
 
         options.html = this._createSVG()
     },
@@ -96,6 +114,17 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             '" stroke="' + stroke + '" stroke-opacity=' + strokeOpacity + '" stroke-width="' + strokeWidth + '"/>'
         
         return circle
+    },
+    _createCircleImage: function() {
+        var x = this.options.circleImageAnchor.x
+        var y = this.options.circleImageAnchor.y
+        var height = this.options.circleImageSize.y
+        var width = this.options.circleImageSize.x
+        var href = this.options.circleImagePath
+        
+        var image = '<image x="' + x + '" y="' + y + '" height="' + height + '" width="' + width + '" href="' + href + '"</image>'
+        
+        return image
     },
     _createPathDescription: function() {
         var height = Number(this.options.iconSize.y)
@@ -127,46 +156,47 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
 
         return path
     },
-     _createShadow: function() {
-         var pathDescription = this._createPathDescription()
-         var strokeWidth = this.options.weight
-         var stroke = this.options.shadowColor
-         var fill = this.options.shadowColor
-         var className = this.options.className + "-shadow"
- 
-         var origin = (this.options.iconSize.x / 2) + "px " + (this.options.iconSize.y) + "px"
-         var rotation = this.options.shadowAngle
-         var height = this.options.shadowLength
-         var opacity = this.options.shadowOpacity
-         var blur = this.options.shadowBlur
-         var translate = this.options.shadowTranslate.x + "px, " + this.options.shadowTranslate.y + "px"
- 
-         var blurFilter = "<filter id='iconShadowBlur'><feGaussianBlur in='SourceGraphic' stdDeviation='" + blur + "'/></filter>"
- 
-         var shadow = '<path filter="url(#iconShadowBlur") class="' + className + '" d="' + pathDescription +
-             '" fill="' + fill + '" stroke-width="' + strokeWidth + '" stroke="' + stroke +
-             '" style="opacity: ' + opacity + '; ' + 'transform-origin: ' + origin +'; transform: rotate(' + rotation + 'deg) translate(' + translate + ') scale(1, '+ height +')' +
-             '"/>'
- 
-         return blurFilter+shadow
-     },
+    _createShadow: function() {
+        var pathDescription = this._createPathDescription()
+        var strokeWidth = this.options.weight
+        var stroke = this.options.shadowColor
+        var fill = this.options.shadowColor
+        var className = this.options.className + "-shadow"
+
+        var origin = (this.options.iconSize.x / 2) + "px " + (this.options.iconSize.y) + "px"
+        var rotation = this.options.shadowAngle
+        var height = this.options.shadowLength
+        var opacity = this.options.shadowOpacity
+        var blur = this.options.shadowBlur
+        var translate = this.options.shadowTranslate.x + "px, " + this.options.shadowTranslate.y + "px"
+
+        var blurFilter = "<filter id='iconShadowBlur'><feGaussianBlur in='SourceGraphic' stdDeviation='" + blur + "'/></filter>"
+
+        var shadow = '<path filter="url(#iconShadowBlur") class="' + className + '" d="' + pathDescription +
+            '" fill="' + fill + '" stroke-width="' + strokeWidth + '" stroke="' + stroke + 
+            '" style="opacity: ' + opacity + '; ' + 'transform-origin: ' + origin +'; transform: rotate(' + rotation + 'deg) translate(' + translate + ') scale(1, '+ height +')' +
+            '"/>'
+
+        return blurFilter+shadow 
+    },
     _createSVG: function() {
         var path = this._createPath()
         var circle = this._createCircle()
-        var text = this._createText()
         var shadow = this.options.shadowEnable ? this._createShadow() : ""
+        var innerCircle = this.options.circleImagePath ? this._createCircleImage() : this._createText()
         var className = this.options.className + "-svg"
         var width = this.options.iconSize.x 
         var height = this.options.iconSize.y
-             
+            
         if (this.options.shadowEnable) {
             width += this.options.iconSize.y * this.options.shadowLength - (this.options.iconSize.x / 2)
             width = Math.max(width, 32)
             height += this.options.iconSize.y * this.options.shadowLength
-        }        
+        }
 
         var style = "width:" + width + "px; height:" + height
-        var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + text + '</svg>'
+
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + innerCircle + '</svg>'
 
         return svg
     },
