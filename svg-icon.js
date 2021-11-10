@@ -5,14 +5,17 @@
 
 L.DivIcon.SVGIcon = L.DivIcon.extend({
     options: {
-        "circleText": "",
         "className": "svg-icon",
         "circleAnchor": null, //defaults to [iconSize.x/2, iconSize.x/2]
         "circleColor": null, //defaults to color
-        "circleOpacity": null, // defaults to opacity
         "circleFillColor": "rgb(255,255,255)",
-        "circleFillOpacity": null, //default to opacity 
-        "circleRatio": 0.5,
+        "circleFillOpacity": null, //default to opacity
+        "circleImageAnchor": null //defaults to [(iconSize.x - circleImageSize.x)/2, (iconSize.x - circleImageSize.x)/2]
+        "circleImagePath": null, //no default, preference over circleText
+        "circleImageSize": null, //defaults to [iconSize.x/4, iconSize.x/4] if circleImage is supplied
+        "circleOpacity": null, // defaults to opacity
+        "circleRatio": 0.5,        
+        "circleText": "",
         "circleWeight": null, //defaults to weight
         "color": "rgb(0,102,255)",
         "fillColor": null, // defaults to color
@@ -77,6 +80,15 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         else {
             options.popupAnchor = L.point(options.popupAnchor)
         }
+        if (options.circleImagePath && !options.circleImageSize) {
+            options.circleImageSize = L.point(Number(options.iconSize.x)/4, Number(options.iconSize.x)/4)
+        }
+        if (options.circleImagePath && !options.circleImageAnchor) {
+            options.circleImageAnchor = L.point(
+                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2
+                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2
+            )
+        }
 
         options.html = this._createSVG()
     },
@@ -96,6 +108,17 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
             '" stroke="' + stroke + '" stroke-opacity=' + strokeOpacity + '" stroke-width="' + strokeWidth + '"/>'
         
         return circle
+    },
+    _createCircleImage: function() {
+        var x = this.options.circleImageAnchor.x
+        var y = this.options.circleImageAnchor.y
+        var height = this.options.circleImageSize.y
+        var width = this.options.circleImageSize.x
+        var href = this.options.circleImagePath
+        
+        var image = '<image x="' + x + '" y="' + y + '" height="' + height + '" width="' + width + '" href="' + href + '"</image>'
+        
+        return image
     },
     _createPathDescription: function() {
         var height = Number(this.options.iconSize.y)
@@ -154,7 +177,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var path = this._createPath()
         var circle = this._createCircle()
         var shadow = this.options.shadowEnable ? this._createShadow() : ""
-        var text = this._createText()
+        var innerCircle = this.options.circleImagePath ? this._createCircleImage() : this._createText()
         var className = this.options.className + "-svg"
         var width = this.options.iconSize.x 
         var height = this.options.iconSize.y
@@ -167,7 +190,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
 
         var style = "width:" + width + "px; height:" + height
 
-        var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + text + '</svg>'
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + innerCircle + '</svg>'
 
         return svg
     },
