@@ -10,7 +10,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "circleColor": null, //defaults to color
         "circleFillColor": "rgb(255,255,255)",
         "circleFillOpacity": null, //default to opacity
-        "circleImageAnchor": null //defaults to [(iconSize.x - circleImageSize.x)/2, (iconSize.x - circleImageSize.x)/2]
+        "circleImageAnchor": null, //defaults to [(iconSize.x - circleImageSize.x)/2, (iconSize.x - circleImageSize.x)/2]
         "circleImagePath": null, //no default, preference over circleText
         "circleImageSize": null, //defaults to [iconSize.x/4, iconSize.x/4] if circleImage is supplied
         "circleOpacity": null, // defaults to opacity
@@ -83,11 +83,17 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         if (options.circleImagePath && !options.circleImageSize) {
             options.circleImageSize = L.point(Number(options.iconSize.x)/4, Number(options.iconSize.x)/4)
         }
+        else {
+            options.circleImageSize = L.point(options.circleImageSize)
+        }
         if (options.circleImagePath && !options.circleImageAnchor) {
             options.circleImageAnchor = L.point(
                 (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2
-                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2
+                (Number(options.iconSize.x) - Number(options.circleImageSize.y))/2
             )
+        }
+        else {
+            options.circleImageAnchor = L.point(options.circleImageAnchor)
         }
 
         options.html = this._createSVG()
