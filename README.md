@@ -1,5 +1,5 @@
 # Leaflet-SVGIcon
-L.DivIcon.SVGIcon is a simple and customizable SVG marker icon with no external library or file dependencies. By default, 1 emoji, 2 characters of text or about 3 numerals can fit inside the icon's inner circle. 
+L.DivIcon.SVGIcon is a simple and customizable SVG marker icon with no external library or file dependencies. By default, 1 emoji, 2 characters of text or about 3 numerals can fit inside the icon's inner circle. A custom image referenced by URL may also be placed inside the circle.
 
 A shadow generated from the _createPathDescription method may also be added. As currently implemented, shadows are most compatible with shapes ending in a point.
 
@@ -49,6 +49,9 @@ var marker = new L.Marker(latlng, { icon: new L.DivIcon.SVGIcon() })
 |circleFillColor|String|"rgb(255,255,255)"|Color of the icon's inner circle interior|
 |circleFillOpacity|Number|same as "opacity"|Opacity of the icon's inner circle interior|
 |circleRatio|Number|0.5|Ratio of the width of the icon's inner circle to the width of the marker. Set to 0 to disable circle|
+|circleImagePath|String|""|A URL to an image to place in the middle of the circle. Supercedes circleText if both are provided|
+|circleImageSize|Point|[iconSize.x/4, iconSize.x/4]|The size of the inner image|
+|circleImageAnchor|Point|[(iconSize.x - circleImageSize.x)/2, (iconSize.x - circleImageSize.y)/2]|Position of the image from the upper left|
 |circleWeight|Number|same as "weight"|Width of the icon's inner circle border|
 |color|String|"rgb(0,102,255)"|Color of the icon's border|
 |fillColor|String|same as "color"|Color of the icon's interior|
