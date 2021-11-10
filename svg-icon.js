@@ -88,7 +88,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         }
         if (options.circleImagePath && !options.circleImageAnchor) {
             options.circleImageAnchor = L.point(
-                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2
+                (Number(options.iconSize.x) - Number(options.circleImageSize.x))/2,
                 (Number(options.iconSize.x) - Number(options.circleImageSize.y))/2
             )
         }
