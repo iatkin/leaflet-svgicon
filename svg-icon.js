@@ -259,6 +259,12 @@ L.Marker.SVGMarker = L.Marker.extend({
                 this.setIcon(L.divIcon.svgIcon(iconOptions))
             }
         }
+    },
+    setText: function (text) {
+        if (this._icon) {
+            var iconText = this._icon.children[0].children[2]
+            iconText.innerHTML = text;
+        }
     }
 })
 

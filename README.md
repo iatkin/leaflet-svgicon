@@ -111,6 +111,9 @@ This method supports three style values:
 
 If "color" and "iconOptions" are specified, "iconOptions.color" is set to "color".
 
+#### setText(text)
+This method updates the inner text of the marker.
+
 ## Advanced Customization
 ### Modifying the icon's shape
 The body of the icon is drawn using an SVG path. The shape may be changed by replacing the *_createPathDescription* method of L.DivIcon.SVGIcon to return a different path description i.e. the path drawing instructions. Please see the Mozilla Developer Network's [SVG Path Tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) for more information on SVG paths.
